@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Exam Performance Indicator - Analytics & Prediction Dashboard</title>
+    <meta name="description" content="Predict mathematical performance and examine student trends based on parental status, prep courses, reading, and writing metrics.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Background Math Atmosphere -->
+    <div class="math-deco math-deco-1">&int; x dx</div>
+    <div class="math-deco math-deco-2">&sum; y_i</div>
+    <div class="math-deco math-deco-3">&pi; r^2</div>
+    <div class="math-deco math-deco-4">&radic; x^2+y^2</div>
+    <div class="math-deco math-deco-5">f(x) = dy/dx</div>
+
+    <!-- Nav Bar -->
+    <nav class="math-nav">
+        <a href="/" class="math-brand">
+            <span>&sum;</span> StudentExam.io
+        </a>
+        <ul class="math-nav-links">
+            <li><a href="/" class="math-nav-link" style="color: var(--accent-teal);">Home</a></li>
+            <li><a href="/predictdata" class="math-nav-link">Predictor</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="hero-section">
+            <div class="hero-math-badge">
+                <span style="font-family: var(--font-math);">&pi;</span> Predictive Modeling Console Active
+            </div>
+            <h1 class="hero-title">
+                Forecasting Student MATHS <span>Success Rates</span>
+            </h1>
+            <p class="hero-subtitle">
+                An advanced predictive model leveraging regression analysis and standardized feature transformations to forecast student mathematics scores based on demographic attributes and linguistic performance.
+            </p>
+            <div class="hero-ctas">
+                <a href="/predictdata" class="math-btn math-btn-primary" id="btnLaunchConsole">
+                    Launch Predictor Console <span class="math-symbol">&rarr;</span>
+                </a>
+                <a href="https://github.com/adilmirza975/ML_PROJECTS" target="_blank" class="math-btn math-btn-secondary" id="btnViewRepo">
+                    Documentation
+                </a>
+            </div>
+        </section>
+
+        <!-- Feature Grid -->
+        <div class="features-grid">
+            <div class="feature-box">
+                <div class="feature-icon">&sigma;</div>
+                <h3 class="feature-title">Feature Transformations</h3>
+                <p class="feature-desc">
+                    Demographic columns are One-Hot Encoded and numeric metrics scaled via a StandardScaler pipeline to optimize model accuracy.
+                </p>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon">&fnof;</div>
+                <h3 class="feature-title">Multivariate Prediction</h3>
+                <p class="feature-desc">
+                    Predicts math capability by examining reading and writing levels in combination with parental status and prep courses.
+                </p>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon">&sum;</div>
+                <h3 class="feature-title">Optimized Regressor</h3>
+                <p class="feature-desc">
+                    Evaluated and tuned with GridSearchCV, using high-performance regression pipelines for predictions.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="math-footer">
+        &copy; 2026 StudentExam.io // Linear Regression & Feature scaling model active on server.
+    </footer>
+</body>
+</html>

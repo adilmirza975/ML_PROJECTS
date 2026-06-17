@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maths Score Predictor - Student Exam Performance Indicator</title>
+    <meta name="description" content="Predict a student's mathematical score using advanced machine learning based on demographic data and core academic performance.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Background Math Atmosphere -->
+    <div class="math-deco math-deco-1">&int; x dx</div>
+    <div class="math-deco math-deco-2">&sum; y_i</div>
+    <div class="math-deco math-deco-3">&pi; r^2</div>
+    <div class="math-deco math-deco-4">&radic; x^2+y^2</div>
+    <div class="math-deco math-deco-5">f(x) = dy/dx</div>
+
+    <!-- Nav Bar -->
+    <nav class="math-nav">
+        <a href="/" class="math-brand">
+            <span>&sum;</span> StudentExam.io
+        </a>
+        <ul class="math-nav-links">
+            <li><a href="/" class="math-nav-link">Home</a></li>
+            <li><a href="/predictdata" class="math-nav-link" style="color: var(--accent-teal);">Predictor</a></li>
+        </ul>
+    </nav>
+
+    <!-- Content -->
+    <main class="main-content">
+        <div class="math-card">
+            <h1 class="card-title">
+                <span style="font-family: var(--font-serif); color: var(--accent-teal);">&int;</span>
+                Maths Score Prediction
+            </h1>
+            <p class="card-subtitle">
+                Enter student demographics and scores to predict the final mathematics grade using our ML model.
+            </p>
+
+            <form action="{{ url_for('predict_datapoint')}}" method="post" class="math-form" id="predictForm">
+                <!-- Row 1: Gender & Ethnicity -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="math-label" for="gender">
+                            <span class="symbol">&#9794;</span> Gender
+                        </label>
+                        <div class="select-wrapper">
+                            <select class="math-select" name="gender" id="gender" required>
+                                <option value="" disabled {% if not gender %}selected{% endif %}>Select Gender</option>
+                                <option value="male" {% if gender == 'male' %}selected{% endif %}>Male</option>
+                                <option value="female" {% if gender == 'female' %}selected{% endif %}>Female</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="math-label" for="ethnicity">
+                            <span class="symbol">&theta;</span> Race or Ethnicity
+                        </label>
+                        <div class="select-wrapper">
+                            <select class="math-select" name="ethnicity" id="ethnicity" required>
+                                <option value="" disabled {% if not ethnicity %}selected{% endif %}>Select Ethnicity</option>
+                                <option value="group A" {% if ethnicity == 'group A' %}selected{% endif %}>Group A</option>
+                                <option value="group B" {% if ethnicity == 'group B' %}selected{% endif %}>Group B</option>
+                                <option value="group C" {% if ethnicity == 'group C' %}selected{% endif %}>Group C</option>
+                                <option value="group D" {% if ethnicity == 'group D' %}selected{% endif %}>Group D</option>
+                                <option value="group E" {% if ethnicity == 'group E' %}selected{% endif %}>Group E</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 2: Parental Education & Lunch Type -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="math-label" for="parental_level_of_education">
+                            <span class="symbol">&pi;</span> Parent's Education
+                        </label>
+                        <div class="select-wrapper">
+                            <select class="math-select" name="parental_level_of_education" id="parental_level_of_education" required>
+                                <option value="" disabled {% if not parental_level_of_education %}selected{% endif %}>Select Education Level</option>
+                                <option value="associate's degree" {% if parental_level_of_education == "associate's degree" %}selected{% endif %}>Associate's Degree</option>
+                                <option value="bachelor's degree" {% if parental_level_of_education == "bachelor's degree" %}selected{% endif %}>Bachelor's Degree</option>
+                                <option value="high school" {% if parental_level_of_education == "high school" %}selected{% endif %}>High School</option>
+                                <option value="master's degree" {% if parental_level_of_education == "master's degree" %}selected{% endif %}>Master's Degree</option>
+                                <option value="some college" {% if parental_level_of_education == "some college" %}selected{% endif %}>Some College</option>
+                                <option value="some high school" {% if parental_level_of_education == "some high school" %}selected{% endif %}>Some High School</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="math-label" for="lunch">
+                            <span class="symbol">&delta;</span> Lunch Type
+                        </label>
+                        <div class="select-wrapper">
+                            <select class="math-select" name="lunch" id="lunch" required>
+                                <option value="" disabled {% if not lunch %}selected{% endif %}>Select Lunch Type</option>
+                                <option value="free/reduced" {% if lunch == 'free/reduced' %}selected{% endif %}>Free / Reduced</option>
+                                <option value="standard" {% if lunch == 'standard' %}selected{% endif %}>Standard</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 3: Test Preparation & Scores -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="math-label" for="test_preparation_course">
+                            <span class="symbol">&lambda;</span> Prep Course
+                        </label>
+                        <div class="select-wrapper">
+                            <select class="math-select" name="test_preparation_course" id="test_preparation_course" required>
+                                <option value="" disabled {% if not test_preparation_course %}selected{% endif %}>Select Test Prep</option>
+                                <option value="none" {% if test_preparation_course == 'none' %}selected{% endif %}>None</option>
+                                <option value="completed" {% if test_preparation_course == 'completed' %}selected{% endif %}>Completed</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <!-- Swaps fixed: label Writing matches name writing_score -->
+                        <label class="math-label" for="writing_score">
+                            <span class="symbol">W</span> Writing Score (0 - 100)
+                        </label>
+                        <input class="math-input" type="number" name="writing_score" id="writing_score"
+                            placeholder="Enter writing score" min="0" max="100" 
+                            value="{{ writing_score if writing_score is defined and writing_score is not none else '' }}" required />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <!-- Swaps fixed: label Reading matches name reading_score -->
+                        <label class="math-label" for="reading_score">
+                            <span class="symbol">R</span> Reading Score (0 - 100)
+                        </label>
+                        <input class="math-input" type="number" name="reading_score" id="reading_score"
+                            placeholder="Enter reading score" min="0" max="100" 
+                            value="{{ reading_score if reading_score is defined and reading_score is not none else '' }}" required />
+                    </div>
+                    <div class="form-group" style="justify-content: flex-end;">
+                        <div class="form-submit-container">
+                            <button type="submit" class="math-btn math-btn-primary" id="btnPredict">
+                                Run Prediction Model <span class="math-symbol">&radic;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Error message container -->
+            {% if error %}
+            <div style="margin-top: 2rem; padding: 1rem; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; color: #f87171; text-align: center;">
+                {{ error }}
+            </div>
+            {% endif %}
+
+            <!-- Prediction results display container -->
+            {% if results is defined and results is not none %}
+            <div class="math-result-container" id="predictionResult">
+                <span class="math-result-badge">Model Output</span>
+                <div class="math-gauge-circle">
+                    <span class="gauge-value">{{ results | round(1) }}</span>
+                </div>
+                <div class="math-grade-desc">
+                    Predicted Maths Score
+                </div>
+                <div class="math-grade-details">
+                    {% if results >= 90 %}
+                        <strong>Category A: Excellent.</strong> The model indicates outstanding performance, reflecting exceptional reasoning, quantitative logic, and analytical problem-solving skills.
+                    {% elif results >= 80 %}
+                        <strong>Category B: Very Good.</strong> The model indicates a strong mathematical capacity and solid conceptual reasoning under exam conditions.
+                    {% elif results >= 70 %}
+                        <strong>Category C: Good.</strong> The student exhibits competent arithmetic skill and a healthy foundational understanding of algebra and analysis.
+                    {% elif results >= 60 %}
+                        <strong>Category D: Satisfactory.</strong> Standard numeric proficiency. Moderate correlation is shown with preparation scores, pointing to areas of improvement.
+                    {% else %}
+                        <strong>Category F: Support Needed.</strong> The predictive score points to core difficulties. Further target study and conceptual mathematics support are highly advised.
+                    {% endif %}
+                </div>
+                
+                <div class="comparison-metrics">
+                    <div class="metric-item">
+                        <span class="metric-label">Reading Input</span>
+                        <span class="metric-value" style="color: var(--accent-emerald);">{{ reading_score | round }}</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Writing Input</span>
+                        <span class="metric-value" style="color: var(--accent-emerald);">{{ writing_score | round }}</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Predicted Math</span>
+                        <span class="metric-value" style="color: var(--accent-teal);">{{ results | round }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </main>
+
+    <footer class="math-footer">
+        &copy; 2026 StudentExam.io // Linear Regression & Feature scaling model active on server.
+    </footer>
+</body>
+</html>
